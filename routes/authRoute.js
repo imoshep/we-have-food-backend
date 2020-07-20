@@ -4,6 +4,7 @@ const { User } = require("../models/userModel");
 const express = require("express");
 const router = express.Router();
 
+// Existing user login
 router.post("/", async (req, res) => {
   // Validate Message Body
   const { error } = validate(req.body);

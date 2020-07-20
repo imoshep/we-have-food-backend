@@ -24,7 +24,9 @@ app.use(express.json());
 // config routes
 const usersRoute = require("./routes/usersRoute");
 const authRoute = require("./routes/authRoute");
+const foodRoute = require("./routes/foodRoute");
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/food", foodRoute);
 
 http.listen(port, () => console.log(`Listening on port ${port}`));
