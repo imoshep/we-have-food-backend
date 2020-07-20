@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const mongoose = require("mongoose");
+const cors = require("cors");
 
-const mongoConfig = "./config/mongo.config.js";
+const mongoConfig = require("./config/mongo.config.js");
 
 const MONGO_URI = `mongodb+srv://${mongoConfig.username}:${mongoConfig.password}@cluster0-4ryx0.mongodb.net/${mongoConfig.db}?retryWrites=true&w=majority`;
 // mongo `mongodb+srv://imoshep:vnuaheu123@cluster0-4ryx0.mongodb.net/we-have-food?retryWrites=true&w=majority`
@@ -22,6 +23,8 @@ app.use(express.json());
 
 // config routes
 const usersRoute = require("./routes/usersRoute");
+const authRoute = require("./routes/authRoute");
 app.use("/api/users", usersRoute);
+app.use("/api/auth", authRoute);
 
 http.listen(port, () => console.log(`Listening on port ${port}`));
