@@ -19,4 +19,8 @@ router.post("/", async (req, res) => {
   res.send(_.pick(user, ["_id", "name", "email"]));
 });
 
+// view user's favorites
+// router.post("/my-favorites", async (req, res) => {
+// }
+
 module.exports = router;
