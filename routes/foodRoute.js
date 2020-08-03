@@ -6,43 +6,24 @@ const _ = require("lodash");
 const foodImage = "../assets/images/default-food-image.jpg";
 
 const auth = require("../middleware/authMiddle");
-// const multer = require("../middleware/multerMiddle");
-const { Food, validateFood } = require("../models/foodModel");
+const multerUpload = require("../middleware/multerMiddle");
+const { Food, validateFood, validateImage } = require("../models/foodModel");
 
-////////////////////////////////////////////////////////////////////////
-const multer = require("multer");
+router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
+  const { error } = validateFood(req.body);
+  const imageValid = req.file ? validateImage(req.file) : true;
+  if (error || !imageValid)
+    return res.status(400).send("Card detailes are not valid");
 
-const storage = multer.diskStorage({
-  destination: "./public/data/food/images/",
-  filename: function (req, file, cb) {
-    const fileName = _.padStart(_.toString(_.random(99999999)), 8, "0");
-    const parts = file.mimetype.split("/");
-    cb(null, "IMAGE-" + fileName + "." + parts[1]);
-  },
-});
+  let food = new Food({
+    foodTitle: req.body.foodTitle,
+    foodDesc: req.body.foodDesc,
+    foodImage: req.file ? req.file.destination + req.file.filename : null,
+    foodLocation: req.body.foodLocation,
+  });
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5000000 },
-});
-
-////////////////////////////////////////////////////////////////////////
-
-router.post("/", auth, upload.single("foodImage"), async (req, res) => {
-  // const { error } = validateFood(req.body);
-  // if (error) return res.status(400).send("Card detailes are not valid");
-  console.log(req.body);
-  console.log(req.file);
-  // let food = new Food({
-  //   foodTitle: req.body.foodTitle,
-  //   foodDesc: req.body.foodDesc,
-  //   foodImage: req.body.foodImage ? req.body.foodImage : foodImage,
-  //   foodLocation: req.body.foodLocation,
-  // });
-
-  // post = await food.save();
-  // res.send(post);
-  res.send(200).end();
+  post = await food.save();
+  res.send(post).end();
 });
 
 module.exports = router;

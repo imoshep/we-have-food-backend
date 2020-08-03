@@ -38,13 +38,17 @@ function validateFood(food) {
   const foodValidationSchema = Joi.object({
     foodTitle: Joi.string().min(2).max(255).required(),
     foodDesc: Joi.string().min(2).max(1024).required(),
-    foodImage: Joi.string().min(2).max(255),
     foodLocation: Joi.string().min(2).max(255),
   });
   return foodValidationSchema.validate(food);
 }
 
+function validateImage(file) {
+  return file.mimetype.startsWith("image");
+}
+
 module.exports = {
   Food,
   validateFood,
+  validateImage,
 };
