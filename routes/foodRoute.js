@@ -10,6 +10,10 @@ const multerUpload = require("../middleware/multerMiddle");
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
 router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
+  // console.dir("req: " + req);
+  console.log(req.body);
+  // console.log(req.file.filename);
+  // console.log('file: ' + req.file);
   const { error } = validateFood(req.body);
   const imageValid = req.file ? validateImage(req.file) : true;
   if (error || !imageValid)
