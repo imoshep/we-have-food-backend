@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 const { string } = require("@hapi/joi");
 
-const locationRegex = /^{"lat":\d{2}.\d{5,12},"lng":\d{2}.\d{5,12}}$/;
+const locationRegex = /^{"lat":"\d{2}\.\d{5,12}","lng":"\d{2}\.\d{5,12}"}$/;
 
 const foodSchema = new mongoose.Schema({
   foodTitle: {
@@ -40,8 +40,8 @@ function validateFood(food) {
   const foodValidationSchema = Joi.object({
     foodTitle: Joi.string().min(2).max(255).required(),
     foodDesc: Joi.string().min(2).max(1024).required(),
-    foodImage: Joi.string().min(2).max(255),
-    foodLocation: Joi.string().regex(locationRegex),
+    // foodLocation: Joi.string().regex(locationRegex).allow(null),
+    foodLocation: [Joi.string().regex(locationRegex), Joi.allow(null)],
   });
   return foodValidationSchema.validate(food);
 }
