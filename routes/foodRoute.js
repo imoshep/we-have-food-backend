@@ -2,17 +2,20 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
+const moment = require("moment");
 
-const foodImage = "../assets/images/default-food-image.jpg";
+const deafultImage = "../public/website/images/default-food-image.jpg";
 
 const auth = require("../middleware/authMiddle");
 const multerUpload = require("../middleware/multerMiddle");
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
+const defaultImagePath = "./public/website/images/default-food-image.jpg";
+
 router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
-  console.log(req.file);
+  // console.log(req.body);
+  // console.log(req.user);
+  // console.log(req.file);
   const { error } = validateFood(req.body);
   const imageValid = req.file ? validateImage(req.file) : true;
   if (error || !imageValid) {
@@ -22,18 +25,50 @@ router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
   let food = new Food({
     foodTitle: req.body.foodTitle,
     foodDesc: req.body.foodDesc,
-    foodImage: req.file ? req.file.destination + req.file.filename : null,
-    foodLocation: req.body.foodLocation,
-    // user_id: req.user._id,
+    foodImage: req.file
+      ? req.file.destination + req.file.filename
+      : defaultImagePath,
+    foodCity: req.body.foodCity,
+    user_id: req.user._id,
   });
-
-  post = await food.save();
-  res.send(post).end();
+  try {
+    post = await food.save();
+    res.send(post).end();
+  } catch (err) {
+    res.status(500).send(error.message);
+  }
 });
 
 router.get("/", auth, async (req, res) => {
-  let foodData = await Food.find();
-  res.send(foodData);
+  if (req.query.foodCity) {
+    const foodData = await Food.find({
+      foodCity: req.query.foodCity,
+      createdAt: { $gte: moment().subtract(1, "weeks") },
+    }).catch((err) => {
+      return res.status(500).send(err.message);
+    });
+    res.send(foodData);
+  }
+
+  if (req.query.user_id) {
+    const foodData = await Food.find({
+      user_id: req.query.user_id,
+    }).catch((err) => {
+      return res.status(500).send(err.message);
+    });
+    res.send(foodData);
+  }
+
+  if (req.query._id) {
+    const foodData = await Food.find({
+      _id: req.query._id,
+    }).catch((err) => {
+      return res.status(500).send(err.message);
+    });
+    res.send(foodData);
+  }
 });
 
 module.exports = router;
+
+// foodLocation: req.body.foodLocation,

@@ -2,6 +2,7 @@ const Joi = require("@hapi/joi");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const { foodSchema } = require("./foodModel");
 
 const userSchema = new mongoose.Schema({
   name: {

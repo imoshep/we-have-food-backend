@@ -20,13 +20,16 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 // config routes
 const usersRoute = require("./routes/usersRoute");
 const authRoute = require("./routes/authRoute");
 const foodRoute = require("./routes/foodRoute");
+const imageRoute = require("./routes/imageRoute");
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/food", foodRoute);
+app.use("/api/images", imageRoute);
 
 http.listen(port, () => console.log(`Listening on port ${port}`));

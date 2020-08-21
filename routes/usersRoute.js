@@ -6,10 +6,15 @@ const router = express.Router();
 const { User, validate } = require("../models/userModel");
 const auth = require("../middleware/authMiddle");
 
-// see user profile
-router.get("/me", auth, async (req, res) => {
-  const user = await User.findById(req.user._id).select("-password");
-  res.send(user);
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.query.id)
+      .select("-password")
+      .select("-createdAt");
+    res.send(user);
+  } catch (err) {
+    res.status(404).send(err);
+  }
 });
 
 //New user sign up
@@ -20,6 +25,7 @@ router.post("/", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send("This email is already registered");
 
+  console.log(req.body);
   user = new User(req.body);
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);

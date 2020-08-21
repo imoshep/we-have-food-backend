@@ -1,9 +1,6 @@
 const Joi = require("@hapi/joi");
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const { string } = require("@hapi/joi");
-
-const locationRegex = /^{"lat":"\d{2}\.\d{5,12}","lng":"\d{2}\.\d{5,12}"}$/;
 
 const foodSchema = new mongoose.Schema({
   foodTitle: {
@@ -23,9 +20,11 @@ const foodSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 255,
   },
-  foodLocation: {
+  foodCity: {
     type: String,
-    match: locationRegex,
+    required: true,
+    minlength: 2,
+    maxlength: 255,
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -40,8 +39,7 @@ function validateFood(food) {
   const foodValidationSchema = Joi.object({
     foodTitle: Joi.string().min(2).max(255).required(),
     foodDesc: Joi.string().min(2).max(1024).required(),
-    // foodLocation: Joi.string().regex(locationRegex).allow(null),
-    foodLocation: [Joi.string().regex(locationRegex), Joi.allow(null)],
+    foodCity: Joi.string().min(2).max(255).required(),
   });
   return foodValidationSchema.validate(food);
 }
@@ -54,4 +52,14 @@ module.exports = {
   Food,
   validateFood,
   validateImage,
+  foodSchema,
 };
+
+// foodLocation: {
+//   type: String,
+//   match: locationRegex,
+// },
+
+// foodLocation: Joi.string().regex(locationRegex),
+
+// const locationRegex = /^{"lat":"\d{2}\.\d{5,12}","lng":"\d{2}\.\d{5,12}"}$/;
