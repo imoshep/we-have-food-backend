@@ -38,10 +38,10 @@ router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
 });
 
 router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
-  console.log("body: ", req.body);
-  console.log("user: ", req.user);
-  console.log("file: ", req.file);
-  console.log("id from params: ", req.params.id);
+  // console.log("body: ", req.body);
+  // console.log("user: ", req.user);
+  // console.log("file: ", req.file);
+  // console.log("id from params: ", req.params.id);
   const { error } = validateFood(req.body);
   const imageValid = req.file ? validateImage(req.file) : true;
   if (error || !imageValid) {
@@ -114,9 +114,9 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.delete("/:id", auth, async (req, res) => {
-  console.log(req.body);
-  console.log(req.user);
-  console.log(req.params.id);
+  // console.log(req.body);
+  // console.log(req.user);
+  // console.log(req.params.id);
   const food = await Food.findOneAndRemove({
     _id: req.params.id,
     user_id: req.user._id,

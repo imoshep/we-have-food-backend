@@ -10,7 +10,7 @@ const MONGO_URI = `mongodb+srv://${mongoConfig.username}:${mongoConfig.password}
 // mongo `mongodb+srv://imoshep:vnuaheu123@cluster0-4ryx0.mongodb.net/we-have-food?retryWrites=true&w=majority`
 const port = 8181;
 
-mongoose
+mongoose 
   .connect(MONGO_URI, mongoConfig.options)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB ", err));

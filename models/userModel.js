@@ -2,7 +2,6 @@ const Joi = require("@hapi/joi");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { foodSchema } = require("./foodModel");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -29,6 +28,7 @@ const userSchema = new mongoose.Schema({
     minlength: 9,
     maxlength: 10,
   },
+  favorites: [String],
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -36,6 +36,7 @@ userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, config.get("jwtKey"));
   return token;
 };
+
 const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
@@ -51,6 +52,7 @@ function validateUser(user) {
 
   return schema.validate(user);
 }
+
 
 exports.User = User;
 exports.validate = validateUser;
