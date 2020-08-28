@@ -38,7 +38,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   // console.log("body: ", req.body);
   // console.log("user: ", req.user);
   // console.log("file: ", req.file);
