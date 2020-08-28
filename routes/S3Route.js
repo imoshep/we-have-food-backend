@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/authMiddle");
-const aws = 'aws-sdk'
+const aws = require('aws-sdk');
 aws.config.region ="eu-central-1";
 const S3_BUCKET = process.env.S3_BUCKET_NAME;
 
