@@ -11,9 +11,10 @@ const MONGO_URI = `mongodb+srv://${mongoConfig.username}:${mongoConfig.password}
 const port = process.env.PORT || 8181;
 
 mongoose 
-  .connect(MONGO_URI, mongoConfig.options)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Could not connect to MongoDB ", err));
+.connect(MONGO_URI, mongoConfig.options)
+.then(() => console.log("Connected to MongoDB"))
+.catch((err) => console.error("Could not connect to MongoDB ", err));
+
 
 app.use(cors());
 app.use(express.json());
@@ -23,10 +24,10 @@ app.use(express.static("public"));
 const usersRoute = require("./routes/usersRoute");
 const authRoute = require("./routes/authRoute");
 const foodRoute = require("./routes/foodRoute");
-const imageRoute = require("./routes/imageRoute");
+const S3Route = require("./routes/S3Route");
 app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/food", foodRoute);
-app.use("/api/images", imageRoute);
+app.use("/api/sign-s3", S3Route);
 
 http.listen(port, () => console.log(`Listening on port ${port}`));

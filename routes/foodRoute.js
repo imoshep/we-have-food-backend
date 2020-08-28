@@ -5,12 +5,13 @@ const router = express.Router();
 const moment = require("moment");
 
 const auth = require("../middleware/authMiddle");
-const multerUpload = require("../middleware/multerMiddle");
+// const multerUpload = require("../middleware/multerMiddle");
+// multerUpload.single("foodImage"),
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
 const defaultImagePath = "./public/website/images/default-food-image.jpg";
 
-router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
+router.post("/", auth, async (req, res) => {
   // console.log(req.body);
   // console.log(req.user);
   // console.log(req.file);
