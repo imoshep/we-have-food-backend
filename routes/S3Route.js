@@ -22,6 +22,8 @@ router.get("/", auth, (req, res) => {
     };
 
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
+        console.log(process.env.AWS_ACCESS_KEY_ID)
+        console.log(process.env.AWS_SECRET_ACCESS_KEY)
         if(err) {
             console.log(err);
             return res.status(500).send(err);
