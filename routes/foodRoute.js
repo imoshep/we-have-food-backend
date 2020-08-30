@@ -12,7 +12,7 @@ const { Food, validateFood, validateImage } = require("../models/foodModel");
 const defaultImagePath = "./public/website/images/default-food-image.jpg";
 
 router.post("/", auth, async (req, res) => {
-  // console.log(req.body);
+  console.log("body: ", req.body);
   // console.log(req.user);
   // console.log(req.file);
   const { error } = validateFood(req.body);
