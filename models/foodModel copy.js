@@ -60,3 +60,25 @@ module.exports = {
   foodSchema,
   validateFoodId
 };
+
+// foodLocation: {
+//   type: String,
+//   match: locationRegex,
+// },
+
+// foodLocation: Joi.string().regex(locationRegex),
+
+// const locationRegex = /^{"lat":"\d{2}\.\d{5,12}","lng":"\d{2}\.\d{5,12}"}$/;
+
+
+// function checkObjectIdValid(id){     
+//   if(ObjectID.isValid(id)){         
+//     if(new ObjectID(id) === id){             
+//       return true         
+//     } else {             
+//       return false         
+//     }     
+//   } else {         
+//   return false     } }
+
+  // zzzzzzzzzzzzzzzzzzzzzzzz

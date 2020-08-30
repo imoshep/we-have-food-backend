@@ -21,8 +21,6 @@ router.post("/", async (req, res) => {
   // If User Was Ok:
   let theToken = user.generateAuthToken();
   res.json({ token: theToken });
-  // console.log('user:', user);
-  // console.log('token:', theToken);
 });
 
 function validate(req) {
