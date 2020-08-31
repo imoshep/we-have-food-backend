@@ -16,7 +16,7 @@ mongoose
 .catch((err) => console.error("Could not connect to MongoDB ", err));
 
 const corsOptions = {
-    origin: 'https://priceless-albattani-bf0e3c.netlify.app/',
+    origin: 'https://priceless-albattani-bf0e3c.netlify.app',
     optionsSuccessStatus: 200
 }
 
