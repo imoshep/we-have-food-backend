@@ -15,13 +15,13 @@ mongoose
 .then(() => console.log("Connected to MongoDB"))
 .catch((err) => console.error("Could not connect to MongoDB ", err));
 
-const corsOptions = {
-    origin: 'https://priceless-albattani-bf0e3c.netlify.app',
-    optionsSuccessStatus: 200
-}
+// const corsOptions = {
+//     origin: 'https://priceless-albattani-bf0e3c.netlify.app',
+//     optionsSuccessStatus: 200
+// }
 
-app.options('*', cors(corsOptions));
-// app.use(cors());
+// app.options('*', cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
