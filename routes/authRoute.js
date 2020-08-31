@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Existing user login
 router.post("/", async (req, res) => {
+  console.log("got POST");
   // Validate Message Body
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
