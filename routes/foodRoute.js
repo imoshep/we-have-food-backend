@@ -69,7 +69,9 @@ router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
 });
 
 router.get("/", auth, async (req, res) => {
+  console.log(req.query);
   if (req.query.foodCity) {
+    console.log(req.query.foodCity);
     try {
       const foodData = await Food.find({
         foodCity: req.query.foodCity,
