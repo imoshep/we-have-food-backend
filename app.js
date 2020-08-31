@@ -8,7 +8,7 @@ const mongoConfig = require("./config/mongo.config.js");
 
 const MONGO_URI = `mongodb+srv://${mongoConfig.username}:${mongoConfig.password}@cluster0-4ryx0.mongodb.net/${mongoConfig.db}?retryWrites=true&w=majority`;
 // mongo `mongodb+srv://imoshep:vnuaheu123@cluster0-4ryx0.mongodb.net/we-have-food?retryWrites=true&w=majority`
-const port = process.env.PORT || 8181;
+const port = process.env.PORT || 5000;
 
 mongoose 
 .connect(MONGO_URI, mongoConfig.options)
