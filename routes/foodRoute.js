@@ -69,10 +69,7 @@ router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
   }
 });
 
-router.get("/", cors({
-  origin: 'https://priceless-albattani-bf0e3c.netlify.app',
-  optionsSuccessStatus: 200
-}), auth, async (req, res) => {
+router.get("/",  auth, async (req, res) => {
   console.log(req.query);
   if (req.query.foodCity) {
     console.log(req.query.foodCity);
