@@ -34,7 +34,6 @@ router.post("/", auth, multerUpload.single('foodImage'), async (req, res) => {
 
 
 router.put("/:id", auth, multerUpload.single('foodImage'), async (req, res) => {
-  // console.log(req.body);
   const { error } = validateFood(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
