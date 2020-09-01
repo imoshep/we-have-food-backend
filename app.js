@@ -15,9 +15,16 @@ mongoose
 .then(() => console.log("Connected to MongoDB"))
 .catch((err) => console.error("Could not connect to MongoDB ", err));
 
+const whitelist = ['https://priceless-albattani-bf0e3c.netlify.app', 'http://localhost:3000']
 const corsOptions = {
-    origin: 'https://priceless-albattani-bf0e3c.netlify.app',
-    optionsSuccessStatus: 200
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      },
+      optionsSuccessStatus: 200
 }
 
 app.use('*', cors(corsOptions));
