@@ -4,7 +4,6 @@ const moment = require("moment");
 
 const auth = require("../middleware/authMiddle");
 const multerUpload = require("../middleware/multerMiddle");
-const cors = require("cors");
 
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
