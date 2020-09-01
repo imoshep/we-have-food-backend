@@ -7,7 +7,7 @@ const multerUpload = require("../middleware/multerMiddle");
 
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
-const defaultImagePath = "./public/website/images/default-food-image.jpg";
+const defaultImagePath = "http://imoshep-s3-bucket.s3.amazonaws.com/IMAGE-96361288.jpeg";
 
 router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
   const { error } = validateFood(req.body);
