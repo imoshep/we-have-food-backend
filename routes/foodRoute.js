@@ -11,16 +11,15 @@ const defaultImagePath = "./public/website/images/default-food-image.jpg";
 
 router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
   const { error } = validateFood(req.body);
-  const imageValid = req.file ? validateImage(req.file) : true;
-  if (error || !imageValid) {
+  if (error) {
     return res.status(400).send(error.details[0].message);
   }
 
   let food = new Food({
     foodTitle: req.body.foodTitle,
     foodDesc: req.body.foodDesc,
-    foodImage: req.file
-      ? req.file.destination + req.file.filename
+    foodImage: req.body.foodImage.length > 0 
+      ? req.body.foodImage
       : defaultImagePath,
     foodCity: req.body.foodCity,
     user_id: req.user._id,
@@ -32,6 +31,30 @@ router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+// router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
+//   const { error } = validateFood(req.body);
+//   const imageValid = req.file ? validateImage(req.file) : true;
+//   if (error || !imageValid) {
+//     return res.status(400).send(error.details[0].message);
+//   }
+
+//   let food = new Food({
+//     foodTitle: req.body.foodTitle,
+//     foodDesc: req.body.foodDesc,
+//     foodImage: req.file
+//       ? req.file.destination + req.file.filename
+//       : defaultImagePath,
+//     foodCity: req.body.foodCity,
+//     user_id: req.user._id,
+//   });
+//   try {
+//     post = await food.save();
+//     res.send(post).end();
+//   } catch (err) {
+//     res.status(500).send(error.message);
+//   }
+// });
 
 router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
   const { error } = validateFood(req.body);
