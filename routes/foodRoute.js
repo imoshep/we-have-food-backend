@@ -34,34 +34,35 @@ router.post("/", auth, async (req, res) => {
 
 
 router.put("/:id", auth, async (req, res) => {
-  const { error } = validateFood(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
+  console.log(req.body);
+  // const { error } = validateFood(req.body);
+  // if (error) {
+  //   return res.status(400).send(error.details[0].message);
+  // }
 
-  if(req.body.foodImage === '') req.body.foodImage = defaultImagePath;
+  // if(req.body.foodImage === '') req.body.foodImage = defaultImagePath;
   
-  try {
-    let food = await Food.findOneAndUpdate(
-      { _id: req.params.id, user_id: req.user._id },
-      req.body
-    );
-    if (!food)
-      return res
-        .status(404)
-        .send(
-          "The food listing with the provided ID wasn't found in the database"
-        );
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+  // try {
+  //   let food = await Food.findOneAndUpdate(
+  //     { _id: req.params.id, user_id: req.user._id },
+  //     req.body
+  //   );
+  //   if (!food)
+  //     return res
+  //       .status(404)
+  //       .send(
+  //         "The food listing with the provided ID wasn't found in the database"
+  //       );
+  // } catch (error) {
+  //   res.status(500).send(error.message);
+  // }
 
-  try {
-    food = await Food.findOne({ _id: req.params.id, user_id: req.user._id });
-    res.send(food);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+  // try {
+  //   food = await Food.findOne({ _id: req.params.id, user_id: req.user._id });
+  //   res.send(food);
+  // } catch (error) {
+  //   res.status(500).send(error.message);
+  // }
 });
 
 router.get("/",  auth, async (req, res) => {
