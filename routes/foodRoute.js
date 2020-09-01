@@ -9,7 +9,7 @@ const { Food, validateFood, validateImage } = require("../models/foodModel");
 
 const defaultImagePath = "http://imoshep-s3-bucket.s3.amazonaws.com/IMAGE-96361288.jpeg";
 
-router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validateFood(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -32,42 +32,15 @@ router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
   }
 });
 
-// router.post("/", auth, multerUpload.single("foodImage"), async (req, res) => {
-//   const { error } = validateFood(req.body);
-//   const imageValid = req.file ? validateImage(req.file) : true;
-//   if (error || !imageValid) {
-//     return res.status(400).send(error.details[0].message);
-//   }
 
-//   let food = new Food({
-//     foodTitle: req.body.foodTitle,
-//     foodDesc: req.body.foodDesc,
-//     foodImage: req.file
-//       ? req.file.destination + req.file.filename
-//       : defaultImagePath,
-//     foodCity: req.body.foodCity,
-//     user_id: req.user._id,
-//   });
-//   try {
-//     post = await food.save();
-//     res.send(post).end();
-//   } catch (err) {
-//     res.status(500).send(error.message);
-//   }
-// });
-
-router.put("/:id", auth, multerUpload.single("foodImage"), async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const { error } = validateFood(req.body);
-  const imageValid = req.file ? validateImage(req.file) : true;
-  if (error || !imageValid) {
+  if (error) {
     return res.status(400).send(error.details[0].message);
   }
 
-  req.file
-    ? (req.body.foodImage = req.file.destination + req.file.filename)
-    : (req.body.foodImage = defaultImagePath),
-    console.log(req.body);
-
+  if(req.body.foodImage === '') req.body.foodImage = defaultImagePath;
+  
   try {
     let food = await Food.findOneAndUpdate(
       { _id: req.params.id, user_id: req.user._id },
