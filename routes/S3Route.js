@@ -4,12 +4,17 @@ const auth = require("../middleware/authMiddle");
 const aws = require('aws-sdk');
 aws.config.region ="eu-central-1";
 const S3_BUCKET = process.env.S3_BUCKET_NAME;
+const cors = require("cors");
+const corsOptions = {
+    origin: 'https://priceless-albattani-bf0e3c.netlify.app',
+    optionsSuccessStatus: 200
+};
 
 // router.get("/website/images/deault-food-image.jpeg", async (req, res) => {
 
 // });
 
-router.get("/", auth, (req, res) => {
+router.get("/", auth, cors(corsOptions), (req, res) => {
     const s3 = new aws.S3();
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
