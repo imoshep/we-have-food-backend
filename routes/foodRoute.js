@@ -9,7 +9,7 @@ const { Food, validateFood, validateImage } = require("../models/foodModel");
 
 const defaultImagePath = "http://imoshep-s3-bucket.s3.amazonaws.com/IMAGE-96361288.jpeg";
 
-router.post("/", auth, async (req, res) => {
+router.post("/", auth, multerUpload('foodImage'), async (req, res) => {
   const { error } = validateFood(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -33,7 +33,7 @@ router.post("/", auth, async (req, res) => {
 });
 
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", auth, multerUpload('foodImage'), async (req, res) => {
   console.log(req.body);
   // const { error } = validateFood(req.body);
   // if (error) {
