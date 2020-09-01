@@ -39,7 +39,7 @@ function validateFood(food) {
   const foodValidationSchema = Joi.object({
     foodTitle: Joi.string().min(2).max(255).required(),
     foodDesc: Joi.string().min(2).max(1024).required(),
-    foodImage: Joi.string().max(255).required(),
+    foodImage: Joi.string().max(255),
     foodCity: Joi.string().min(2).max(255).required(),
   });
   return foodValidationSchema.validate(food);
