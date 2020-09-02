@@ -7,7 +7,7 @@ const multerUpload = require("../middleware/multerMiddle");
 
 const { Food, validateFood, validateImage } = require("../models/foodModel");
 
-const defaultImagePath = "http://imoshep-s3-bucket.s3.amazonaws.com/IMAGE-96361288.jpeg";
+const defaultImagePath = "http://imoshep-s3-bucket.s3.amazonaws.com/IMAGE-70860327.jpeg";
 
 router.post("/", auth, multerUpload.single('foodImage'), async (req, res) => {
   const { error } = validateFood(req.body);
@@ -71,7 +71,7 @@ router.get("/",  auth, async (req, res) => {
     try {
       const foodData = await Food.find({
         foodCity: req.query.foodCity,
-        createdAt: { $gte: moment().subtract(1, "weeks") },
+        // createdAt: { $gte: moment().subtract(1, "weeks") },
       });
       res.send(foodData);
     } catch (err) {
